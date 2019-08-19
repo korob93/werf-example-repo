@@ -1,0 +1,1 @@
+docker run --rm -d -p 8080:80 --name werf-example-repo-docker werf-example-repo:docker

@@ -1,0 +1,22 @@
+project: werf-example-repo
+configVersion: 1
+---
+image: nginx/dockerfile
+dockerfile: Dockerfile
+---
+image: nginx/stapel
+from: nginx:stable
+ansible:
+  beforeInstall:
+    - name: Install s6
+      unarchive:
+        src: https://github.com/just-containers/s6-overlay/releases/download/v1.21.4.0/s6-overlay-amd64.tar.gz
+        dest: /
+        remote_src: yes
+git:
+  - add: /rootfs
+    to: /
+docker:
+  ENTRYPOINT: [ "/init" ]
+  EXPOSE:
+    - "80"
